@@ -4,7 +4,6 @@
  "main": "dist/index.js",
  "types": "dist/index.d.ts",
  "license": "MIT",
- "private": false,
  "scripts": {
   "build": "rm -rf ./dist && yarn build:workers && yarn build:nodes",
   "build:nodes": "webpack",
@@ -14,7 +13,8 @@
   "old:coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
   "serve": "npx live-server .",
   "babel": "./node_modules/.bin/babel ./dist --out-dir lib",
-  "browser": "browserify -t babelify ./dist/base.js  > ./dist/bundle.js"
+  "browser": "browserify -t babelify ./dist/base.js  > ./dist/bundle.js",
+  "publish": "npm publish --access public"
  },
  "devDependencies": {
   "@babel/cli": "^7.8.4",

@@ -1,1 +1,1 @@
-export * from './socket-type.enum';
+export * from './socket.enum';

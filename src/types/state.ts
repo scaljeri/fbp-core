@@ -12,5 +12,5 @@ export interface IFbpConnections {
 export interface IFbpState {
 	name: string;
 	nodes: IFbpNodes;
-	connections: IFbpConnection;
+	connections: IFbpConnections;
 }

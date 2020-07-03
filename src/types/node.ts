@@ -1,4 +1,4 @@
-import { IFbpSocket } from './socket';
+import { IFbpSocket, IFbpSockets } from './socket';
 
 export type FbpNodeId = string;
 
@@ -10,17 +10,17 @@ export interface IFbpPosition {
 export type FbpUIMode = 'fullscreen' | 'active' | 'normal';
 
 export interface IFbpNodeUI {
-	position: IFbpPosition;
-	mode: FbpUIMode;
-	index: number;
+	position?: IFbpPosition;
+	mode?: FbpUIMode;
+	index?: number;
 }
 
 export interface IFbpNode<T = any> {
-	id: FbpNodeId;
+	id?: FbpNodeId;
 	parentId?: FbpNodeId;
 	type?: string;
 	state?: T;
-	sockets?: IFbpSocket[];
+	sockets?: IFbpSockets;
 	ui?: IFbpNodeUI;
 	// mode?: 'normal' | 'demo'; // normal is default and `demo` is with transparent sockets
 	// doc?: IFbpDocNode;

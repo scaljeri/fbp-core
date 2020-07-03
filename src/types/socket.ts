@@ -1,11 +1,24 @@
-import { FbpSocketTypes } from '../constants/socket-type.enum';
-import { FbpNodeId } from './node';
+import { FbpSocketTypes, FbpSocketPositions } from '../constants/socket.enum';
 
-export type FbpSocketId = ''
+export type FbpSocketId = string; 
+
+export interface IFbpSocketsSide {
+	add?: boolean;
+	remove?: boolean;
+	items: IFbpSocket[];
+}
+
 export interface IFbpSocket {
 	id: FbpSocketId;
-	node: FbpNodeId;
+	type: FbpSocketTypes;
 	color?: string;
 	label?: string;
-	type: FbpSocketTypes;
+	dataTypes: any[];
+}
+
+export type IFbpSockets = { 
+	[FbpSocketPositions.TOP]?: IFbpSocketsSide;
+	[FbpSocketPositions.RIGHT]?: IFbpSocketsSide;
+	[FbpSocketPositions.BOTTOM]?: IFbpSocketsSide;
+	[FbpSocketPositions.LEFT]?: IFbpSocketsSide;
 }
