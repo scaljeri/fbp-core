@@ -1,0 +1,1 @@
+export const FBP_ANY_TYPE = 'any';

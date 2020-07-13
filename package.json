@@ -14,7 +14,8 @@
   "serve": "npx live-server .",
   "babel": "./node_modules/.bin/babel ./dist --out-dir lib",
   "browser": "browserify -t babelify ./dist/base.js  > ./dist/bundle.js",
-  "publish": "npm publish --access public"
+  "publish": "npm publish --access public",
+  "test:backend": "ts-node -p ./tsconfig-backend.json ./test/backend.ts"
  },
  "devDependencies": {
   "@babel/cli": "^7.8.4",

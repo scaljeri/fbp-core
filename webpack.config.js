@@ -7,9 +7,11 @@ var _ = require('lodash')
 
 module.exports = {
 	mode: 'production',
-	entry: glob.sync('./src/nodes/**/*ts').reduce((acc, path) => {
+	entry: glob.sync('./src/**/*.ts').reduce((acc, path) => {
+		if (path.match(/^\.\/src\/(nodes|workers\/web)\//)) {
 		const entry = path.replace(/\/([^\/]+).ts$/, '')
 		acc[`nodes/${RegExp.$1}`] = path //[path] = path
+		}
 		return acc
 	}, {}),
 	output: {
@@ -29,7 +31,7 @@ module.exports = {
 		]
 	},
 	plugins: [new EsmWebpackPlugin()],
-	// externals: [nodeExternals()]
+	// externals: [nodeExternals()],
 	// resolve: {
 	// 	modules: [process.env.NODE_PATH || 'node_modules', './src/utils']
 	// }

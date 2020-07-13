@@ -6,7 +6,7 @@ export enum FbpSocketTypes {
 
 export enum FbpSocketPositions {
 	TOP = 'top',
-	RIGHT = 'RIGHT',
+	RIGHT = 'right',
 	BOTTOM = 'bottom',
 	LEFT = 'left'
 }

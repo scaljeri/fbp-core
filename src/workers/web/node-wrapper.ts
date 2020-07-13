@@ -15,9 +15,9 @@
 
 	self.addEventListener('message', function ({ data }: { data: Message }) {
 		if (data.type === PACKET_TYPE.INIT) {
-			const path = `/dist/nodes/${data.payload}/${data.payload}.js`;
+			const path = `/dist/nodes/${data.payload}.js`;
 			import(path).then((mod: any) => {
-				instance = new mod.MyTestCls();
+				instance = new mod.NodeWorker();
 				console.log("YES ", instance);
 			});
 		} else {

@@ -1,6 +1,9 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
+/**
+ * This class manages streams
+ */
 interface StreamManagement {
 	count: number;
 	subject: BehaviorSubject<any>;

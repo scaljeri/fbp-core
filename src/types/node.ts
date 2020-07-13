@@ -1,4 +1,4 @@
-import { IFbpSocket, IFbpSockets } from './socket';
+import { IFbpSocket } from './socket';
 
 export type FbpNodeId = string;
 
@@ -19,9 +19,12 @@ export interface IFbpNode<T = any> {
 	id?: FbpNodeId;
 	parentId?: FbpNodeId;
 	type?: string;
-	state?: T;
-	sockets?: IFbpSockets;
+	config?: T;
+	sockets?: IFbpSocket[];
 	ui?: IFbpNodeUI;
+	async?: boolean;
+	autoStart?: boolean;
+
 	// mode?: 'normal' | 'demo'; // normal is default and `demo` is with transparent sockets
 	// doc?: IFbpDocNode;
 }
