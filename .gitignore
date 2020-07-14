@@ -47,3 +47,5 @@ Thumbs.db
 /.stencil
 .nyc_output/*
 coverage/*
+/src/**/*.js
+/test/*.js

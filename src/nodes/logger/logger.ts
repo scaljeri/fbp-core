@@ -43,7 +43,7 @@ export class NodeWorker implements IFbpNodeWorker<ILoggerState> {
 	}
 
 	extractDataType(connection: IFbpConnection) {
-		const dataType = connection.dataType;
+		const dataType = connection.dataType!;
 
 		if (dataType !== FBP_ANY_TYPE) {
 			if (this.dataTypeCount++ === 0) {
@@ -53,7 +53,7 @@ export class NodeWorker implements IFbpNodeWorker<ILoggerState> {
 	}
 
 	remoteDataType(connection: IFbpConnection) {
-		const dataType = connection.dataType;
+		const dataType = connection.dataType!;
 
 		if (dataType !== FBP_ANY_TYPE) {
 			if (--this.dataTypeCount === 0) {

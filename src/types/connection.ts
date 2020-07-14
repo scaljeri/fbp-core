@@ -11,3 +11,14 @@ export interface IFbpConnection {
 	fromNodeId?: FbpNodeId;
 	toNodeId?: FbpNodeId;
 }
+
+export interface IFbpPacketContext {
+	fromSocketId?: FbpSocketId, 
+	connectionId?: IFbpConnectionId
+	sourceNodeType?: string;
+}
+
+export interface IFbpPackageEmit extends IFbpPacketContext {
+	value: any
+	metadata?: any;
+}

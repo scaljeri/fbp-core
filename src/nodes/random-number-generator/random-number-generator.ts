@@ -58,6 +58,9 @@ export class NodeWorker implements IFbpNodeWorker<IFbpRandomNumberGeneratorState
 	}
 
 	init(state: IFbpNode<IFbpRandomNumberGeneratorState>) {
+		const oldState = this.state;
+		this.state = state;
+
 		if (!state.config) {
 			this.state.config = {
 				interval: 1000,
@@ -65,15 +68,14 @@ export class NodeWorker implements IFbpNodeWorker<IFbpRandomNumberGeneratorState
 			}
 		}
 
-		if (!this.state) {
+		if (!oldState) {
 			if (state.autoStart !== false) {
 				this.resume();
 			}
-	 	} else if (this.state.config.interval !== (state.config || {}).interval && this.intervalId) {
+	 	} else if (oldState.config.interval !== (state.config || {}).interval && this.intervalId) {
 			this.resume();
 		}
 
-		this.state = state;
-		this.outputSocketId = state.sockets![FbpSocketTypes.OUT]![0].id;
+		this.outputSocketId = state.sockets![0].id!;
 	}
 }

@@ -6,5 +6,5 @@ export interface IFbpNodeWrapper {
 	setConfig(config: IFbpNode): void;
 }
 
-export type IFbpWorkerDataOut = (data: any, socketId: FbpSocketId) => void;
+export type IFbpWorkerDataOut = (data: any, socketId: FbpSocketId, metaData?: any) => void;
 export type IFbpWorkerStateUpdate<T> = (state: IFbpNode<T>) => void;

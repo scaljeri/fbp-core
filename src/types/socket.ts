@@ -1,4 +1,5 @@
 import { FbpSocketTypes, FbpSocketPositions } from '../constants/socket.enum';
+import { IFbpPacketContext } from './connection';
 
 export type FbpSocketId = string; 
 
@@ -17,6 +18,11 @@ export interface IFbpSocket {
 	side?: FbpSocketPositions;
 }
 
+export interface IFbpSocketPacket {
+	value: any;
+	metadata: any;
+	context: IFbpPacketContext
+}
 // export interface IFbpSockets {
 // 	[FbpSocketTypes.IN]?: IFbpSocket[];
 // 	[FbpSocketTypes.OUT]?: IFbpSocket[];
