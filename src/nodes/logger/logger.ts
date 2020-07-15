@@ -13,6 +13,7 @@ export class NodeWorker implements IFbpNodeWorker<ILoggerState> {
 	private outputSocketId!: FbpSocketId;
 
 	inputStream(data: any): void {
+		console.log('Logger', data);
 		if (this.output) {
 			this.output(data, this.outputSocketId);
 		}
@@ -39,7 +40,7 @@ export class NodeWorker implements IFbpNodeWorker<ILoggerState> {
 
 	init(state: IFbpNode<ILoggerState>) {
 		this.state = state;
-		this.outputSocketId = state.sockets![0].id!;
+		this.outputSocketId = state.sockets![1].id!;
 	}
 
 	extractDataType(connection: IFbpConnection) {

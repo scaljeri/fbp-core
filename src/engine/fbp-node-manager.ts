@@ -6,7 +6,7 @@ import { FbpSocketTypes } from '../constants';
 import { Subscription } from 'rxjs';
 import { IFbpWorkerDataOut } from '../types/worker';
 export class FbpNodeManager {
-	public sockets!: Record<string, FbpSocket>;
+	public sockets: Record<string, FbpSocket> = {};
 	private node!: IFbpNodeWorker;
 	// private inputs: Record<string, any>;
 	// private outputs: Record<string, any>;
@@ -40,6 +40,7 @@ export class FbpNodeManager {
 	}
 
 	addSocket(socket: FbpSocket): void {
+		const self = this;
 		if (socket.type === FbpSocketTypes.IN) {
 			this.inputs[socket.id] = socket.output$.subscribe(({ value, metadata, ...context}) => {
 				this.node.inputStream!(value, metadata, context as IFbpPacketContext);
@@ -73,7 +74,7 @@ export class FbpNodeManager {
 	}
 
 	removeSocket(id: FbpSocketId): void {
-		this.sockets
+		// this.sockets
 	}
 
 	destroy(): void {

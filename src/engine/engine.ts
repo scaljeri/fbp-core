@@ -106,11 +106,11 @@ export class FbpEngine {
 			this.addNode(node);
 		});
 
-		// Object.values(this.state.connections!).forEach((connections: IFbpConnection[]) => {
-		// 	// Those connection all belong to the same parent node
-		// 	connections.forEach(connection => {
-		// 		this.addConnection(connection);
-		// 	});
-		// });
+		Object.values(this.state.connections!).forEach((connections: IFbpConnection[]) => {
+			// Those connection all belong to the same parent node
+			connections.forEach(connection => {
+				this.addConnection(connection);
+			});
+		});
 	}
 }

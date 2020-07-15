@@ -1,14 +1,19 @@
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { FbpSocket } from './fbp-socket';
 import { IFbpConnection, IFbpConnectionId } from '../types/connection';
-import { FbpSocketTypes } from '../constants';
 import { FbpNodeId } from '../types';
 
 export class FbpConnection {
 	private subscription: Subscription | null = null;
 
 	constructor(private from: FbpSocket, private to: FbpSocket, private config: IFbpConnection) {
-		this.subscription = from.subscribe(value => to.emit({ value, connectionId: config.id, fromSocketId: from.id }));
+		if (from.id === to.id) {
+			throw new Error(`Input and output socket are the same for connection ${config.id}`);
+		}
+
+		this.subscription = from.subscribe(value => {
+			to.emit({ value, connectionId: config.id, fromSocketId: from.id })
+		});
 	}
 
 	destroy(): void {

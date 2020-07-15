@@ -1,4 +1,4 @@
-// 
+// // 
 import { FbpEngine } from '../src/engine/engine';
 import { stateBasic } from '../src/fixures/basic-number-logging';
 import { NodeWorker as Rng } from '../src/nodes/random-number-generator/random-number-generator';
@@ -11,4 +11,4 @@ engine.register('logger', Lgr);
 
 engine.state = stateBasic;
 
-// console.log(engine.getNode('log'));
+console.log(engine.getNode('log'));

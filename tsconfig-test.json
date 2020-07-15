@@ -1,24 +1,30 @@
 {
   "compilerOptions": {
     "target": "ES5",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "ESNext",
+	"moduleResolution": "node",
+	"esModuleInterop": true,
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "rootDir": "src",
-    "outDir": "lib/",
+    "rootDir": ".",
+    "outDir": "out/",
     "noImplicitAny": false,
     "declaration": true
   },
   "compileOnSave": false,
   "buildOnSave": false,
+
   "exclude": [
     "node_modules",
     "dist",
     "lib",
 	"examples",
-	"tmp"
+	"tmp",
+	"index.ts",
+	"src",
+	"*.js",
+	"*.d.ts"
   ]
 }
