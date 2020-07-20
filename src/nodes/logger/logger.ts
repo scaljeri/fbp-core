@@ -12,7 +12,7 @@ export class NodeWorker implements IFbpNodeWorker<ILoggerState> {
 	private dataTypeCount = 0;
 	private outputSocketId!: FbpSocketId;
 
-	inputStream(data: any): void {
+	inputStream(data: unknown): void {
 		console.log('Logger', data);
 		if (this.output) {
 			this.output(data, this.outputSocketId);

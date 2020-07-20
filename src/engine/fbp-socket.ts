@@ -1,16 +1,15 @@
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { IFbpSocket, FbpSocketId } from '../types/socket';
-import { share } from 'rxjs/operators';
 import { FbpSocketTypes } from '../constants';
 import { IFbpPackageEmit, IFbpPacketContext } from '../types/connection';
 
 export class FbpSocket {
 	public output$!: Observable<IFbpPackageEmit>;
 
-	private output!: BehaviorSubject<IFbpPackageEmit>;
+	private output!: Subject<IFbpPackageEmit>;
 
 	constructor(public config: IFbpSocket) {
-		this.output = new BehaviorSubject < IFbpPackageEmit>({ value: null });
+		this.output = new Subject<IFbpPackageEmit>();
 		// TODO: findout if share is needed as data is produced outside the observable (hot observable)
 		this.output$ = this.output.asObservable(); // pipe(share());
 	}

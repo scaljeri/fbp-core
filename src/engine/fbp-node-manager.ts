@@ -1,11 +1,13 @@
 import { IFbpNode, FbpNodeId } from '../types/node';
 import { FbpSocket } from './fbp-socket';
-import { FbpSocketId, IFbpNodeWorker, IFbpPacketContext } from '../types';
+import { FbpSocketId, IFbpNodeWorker, IFbpNodeWorkerStatic, IFbpPacketContext } from '../types';
 import { FbpConnection } from './fbp-connection';
 import { FbpSocketTypes } from '../constants';
 import { Subscription } from 'rxjs';
 import { IFbpWorkerDataOut } from '../types/worker';
 export class FbpNodeManager {
+	static asyncNode: IFbpNodeWorkerStatic;
+
 	public sockets: Record<string, FbpSocket> = {};
 	private node!: IFbpNodeWorker;
 	// private inputs: Record<string, any>;
@@ -20,6 +22,12 @@ export class FbpNodeManager {
 
 	constructor(public config: IFbpNode) {
 		if (config.async) {
+			if (!FbpNodeManager.asyncNode) {
+				throw new Error('FbpNodeManager can not run nodes async if no AsyncNode is defined');
+			}
+
+			// this.node = new this.asyncNode();
+			// load worker
 			this.node = {
 				init: () => {
 					// remote stuff
@@ -34,7 +42,6 @@ export class FbpNodeManager {
 		} else if (config.type && FbpNodeManager.NodeClasses[config.type]) {
 			this.node = new (FbpNodeManager.NodeClasses[config.type!])();
 		} 
-		console.log('test', this.node);
 
 		this.node.init(config);
 	}
@@ -43,7 +50,7 @@ export class FbpNodeManager {
 		const self = this;
 		if (socket.type === FbpSocketTypes.IN) {
 			this.inputs[socket.id] = socket.output$.subscribe(({ value, metadata, ...context}) => {
-				this.node.inputStream!(value, metadata, context as IFbpPacketContext);
+				this.node.inputStream!(value, socket.id, metadata, context as IFbpPacketContext);
 			});
 		} else if (socket.type === FbpSocketTypes.OUT) {
 			if (this.node.outputStream) {
@@ -65,12 +72,15 @@ export class FbpNodeManager {
 	}
 
 	connectToOutSocket(connection: FbpConnection): void {
-		console.log('connect to out socket');
+		if (this.node.connectToOutSocket) {
+			this.node.connectToOutSocket(connection.config);
+		}
 	}
 
 	connectToInSocket(connection: FbpConnection): void {
-		console.log('connect to in socket');
-
+		if (this.node.connectToInSocket) {
+			this.node.connectToInSocket(connection.config);
+		}
 	}
 
 	removeSocket(id: FbpSocketId): void {

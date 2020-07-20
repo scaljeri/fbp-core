@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
 /**
@@ -6,7 +6,7 @@ import { share } from 'rxjs/operators';
  */
 interface StreamManagement {
 	count: number;
-	subject: BehaviorSubject<any>;
+	subject: Subject<any>;
 	observable: Observable<any>;
 }
 
@@ -52,7 +52,7 @@ export class FbpStreams {
 	}
 
 	private createStream(): StreamManagement {
-		const bs = new BehaviorSubject(null);
+		const bs = new Subject();
 
 		return {
 			count: 0,

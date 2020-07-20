@@ -1,17 +1,14 @@
-import { Observable, BehaviorSubject } from 'rxjs';
-
 import 'mocha';
 import * as chai from 'chai';
-import * as sinonChai from 'sinon-chai';
+// import * as sinonChai from 'sinon-chai';
 
 import * as sinon from 'sinon';
-import { Subject } from 'rxjs';
 
 import { FbpConnection } from './fbp-connection';
 import { FbpStreams } from './fbp-streams';
 
 const should = chai.should();
-chai.use(sinonChai);
+// chai.use(sinonChai);
 
 describe('DataEngine', () => {
 	let connection: FbpConnection;

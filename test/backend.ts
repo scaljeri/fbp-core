@@ -11,4 +11,4 @@ engine.register('logger', Lgr);
 
 engine.state = stateBasic;
 
-console.log(engine.getNode('log'));
+// console.log(engine.getNode('log'));

@@ -1,17 +1,23 @@
-// import { Worker } from 'worker_threads';
-// import { IFbpNode } from '../../types/node';
-// import { IFbpNodeWorker } from '../../types/node-worker';
-// import { IFbpConnection } from '../../types/connection';
-// import { Observable, Subject, Subscription } from 'rxjs';
+import { Worker } from 'worker_threads';
+import { IFbpNode } from '../../types/node';
+import { IFbpNodeWorker } from '../../types/node-worker';
+import { IFbpConnection } from '../../types/connection';
+import { Observable, Subject, Subscription } from 'rxjs';
 
-// export class NodeRunner {
+export class AsyncNodeRunner implements IFbpNodeWorker {
+	init(state: IFbpNode<any>): void {
+		throw new Error('Method not implemented.');
+	}
 // 	private outputs = {};
 // 	private inputs: Record<string, Subscription> = {};
 
 // 	private isAsync!: boolean;
 // 	private node!: any;
 
-// 	constructor() {}
+// 	constructor() {
+// 		const workerData = { nodePath: `${nodeBasePath}/${state.type}.js` };
+// 		const worker = new Worker(workerName, { workerData });
+// 	}
 
 // 	go(state: IFbpNode, node: IFbpNodeWorker, worker: string, nodeBasePath: string) {
 // 		this.isAsync = state.async || false;
@@ -77,7 +83,7 @@
 // 	pause(): void;
 // 	resume(): void;
 // 	}
-// }
+}
 
 
 // let worker;

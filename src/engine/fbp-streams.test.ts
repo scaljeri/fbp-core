@@ -1,5 +1,5 @@
 import { FbpStreams } from './fbp-streams';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import * as chai from 'chai';
 import 'mocha';
@@ -7,9 +7,9 @@ import 'mocha';
 const should = chai.should();
 
 describe('DataEngine', () => {
-	let produceA: BehaviorSubject<any>;
-	let produceB: BehaviorSubject<any>;
-	let produceC: BehaviorSubject<any>;
+	let produceA: Subject<any>;
+	let produceB: Subject<any>;
+	let produceC: Subject<any>;
 	let consumeA: Observable<any>;
 	let consumeB: Observable<any>;
 	let consumeC: Observable<any>;
@@ -60,9 +60,9 @@ describe('DataEngine', () => {
 		});
 
 		it('should be of type Subjects', () => {
-			produceA.should.be.instanceOf(BehaviorSubject);
-			produceB.should.be.instanceOf(BehaviorSubject);
-			produceC.should.be.instanceOf(BehaviorSubject);
+			produceA.should.be.instanceOf(Subject);
+			produceB.should.be.instanceOf(Subject);
+			produceC.should.be.instanceOf(Subject);
 		})
 
 		it('should be different for different ids', () => {

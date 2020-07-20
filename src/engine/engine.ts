@@ -20,8 +20,6 @@ export class FbpEngine {
 
 	set state(state: IFbpState) {
 		this._state = cloneAndFixState(state);
-		console.log('input', state);
-		console.log('output', this._state);
 
 		if (this.nodes) {
 			Object.values(this.nodes).forEach(node => node.destroy());
