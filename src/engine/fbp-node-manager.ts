@@ -23,6 +23,7 @@ export class FbpNodeManager {
 	constructor(public config: IFbpNode) {
 		if (config.async) {
 			if (!FbpNodeManager.asyncNode) {
+				// TODO: Change into warning and continue
 				throw new Error('FbpNodeManager can not run nodes async if no AsyncNode is defined');
 			}
 
@@ -39,9 +40,11 @@ export class FbpNodeManager {
 
 				}
 			} as IFbpNodeWorker;
-		} else if (config.type && FbpNodeManager.NodeClasses[config.type]) {
+		} else if (FbpNodeManager.NodeClasses[config.type!]) {
 			this.node = new (FbpNodeManager.NodeClasses[config.type!])();
-		} 
+		} else {
+			throw new Error(`Cannot instantiate node of type ${config.type}`)
+		}
 
 		this.node.init(config);
 	}

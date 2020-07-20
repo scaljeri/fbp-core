@@ -5,7 +5,7 @@
 				"type": "node",
 				"request": "launch",
 				"name": "Launch Program",
-				"program": "${workspaceFolder}/test/backend.ts",
+				"program": "${workspaceFolder}/src/backend.ts",
 				"preLaunchTask": "tsc: build - tsconfig-debug.json",
 				"outFiles": [
 					"${workspaceFolder}/dist/**/*.js"
@@ -35,7 +35,9 @@
 			"console": "integratedTerminal",
 			"internalConsoleOptions": "neverOpen",
 			"disableOptimisticBPs": true,
-			"protocol": "inspector"
+			"protocol": "inspector",
+			"sourceMaps": true,
+			"smartStep": true
 		}
 	]
 }
