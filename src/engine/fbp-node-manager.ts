@@ -27,19 +27,7 @@ export class FbpNodeManager {
 				throw new Error('FbpNodeManager can not run nodes async if no AsyncNode is defined');
 			}
 
-			// this.node = new this.asyncNode();
-			// load worker
-			this.node = {
-				init: () => {
-					// remote stuff
-				},
-				outputStream: (cb: IFbpWorkerDataOut) => {
-					// remote stuff
-				},
-				inputStream: (data: any, context: IFbpPacketContext) => {
-
-				}
-			} as IFbpNodeWorker;
+			this.node = new FbpNodeManager.asyncNode();
 		} else if (FbpNodeManager.NodeClasses[config.type!]) {
 			this.node = new (FbpNodeManager.NodeClasses[config.type!])();
 		} else {

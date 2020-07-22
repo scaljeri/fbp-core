@@ -1,13 +1,13 @@
-import { IFbpPacket, IFbpNode } from '../types';
+import { IFbpNode } from '../types';
 
-export abstract class NodeBase {
-	constructor(protected outputHandler: (packet: IFbpPacket) => void) {
-	}
+export abstract class NodeBasexxxx {
+	// constructor(protected outputHandler: (packet: IFbpPacket) => void) {
+	// }
 
-	protected send(packet: IFbpPacket): void {
-		this.outputHandler(packet);
-	}
+	// protected send(packet: IFbpPacket): void {
+	// 	this.outputHandler(packet);
+	// }
 
-	abstract updateNode(node: IFbpNode): void;
-	abstract setPacket(packet: IFbpPacket): void;
+	// abstract updateNode(node: IFbpNode): void;
+	// abstract setPacket(packet: IFbpPacket): void;
 }

@@ -1,0 +1,10 @@
+<html>
+	<head>
+		<script>
+			const myWorker = new Worker('/worker.js');
+			myWorker.onmessage = function (e) {
+				console.log(e);
+			}
+		</script>
+	</head>
+</html>

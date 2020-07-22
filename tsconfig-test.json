@@ -11,7 +11,8 @@
     "rootDir": ".",
     "outDir": "out/",
     "noImplicitAny": false,
-    "declaration": true
+	"declaration": true,
+	"resolveJsonModule": true
   },
   "compileOnSave": false,
   "buildOnSave": false,

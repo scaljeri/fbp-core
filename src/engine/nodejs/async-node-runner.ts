@@ -1,12 +1,52 @@
 import { Worker } from 'worker_threads';
 import { IFbpNode } from '../../types/node';
 import { IFbpNodeWorker } from '../../types/node-worker';
-import { IFbpConnection } from '../../types/connection';
-import { Observable, Subject, Subscription } from 'rxjs';
+import * as path from 'path';
 
 export class AsyncNodeRunner implements IFbpNodeWorker {
-	init(state: IFbpNode<any>): void {
-		throw new Error('Method not implemented.');
+	static workerPath: string;
+	static nodePath: string;
+	static nodePaths: Record<string, string>;
+
+	private worker!: Worker;
+
+	async init(nodeState: IFbpNode<unknown>): Promise<void> {
+		return new Promise((resolve) => {
+			const workerData = {
+				state: nodeState,
+				nodePath: AsyncNodeRunner.getNodePath(nodeState.type!)
+			};
+			console.log('load worker: ' + AsyncNodeRunner.workerPath, workerData);
+
+			this.worker = new Worker(AsyncNodeRunner.workerPath, { workerData });
+
+			this.worker.on('message', d => {
+				switch(d.type) {
+					case 'ready':
+						console.log('Worker is ready')
+						resolve();
+						break;
+					case 'data':
+						console.log(d.payload);
+						break;
+					default:
+						throw new Error(`Node of type ${nodeState.type} produced output of unknown type: ${d.type}`);
+				}
+			});
+			this.worker.on('error', (err) => {
+				console.log('Worker error', err)
+				// TODO
+			});
+			this.worker.on('exit', (code) => {
+				// TODO
+				throw new Error(`Worker node of type ${nodeState.type} stopped with exit code ${code}`);
+			});
+		});
+	}
+
+	private static getNodePath(type: string): string {
+		return AsyncNodeRunner.nodePaths[type!] || 
+			path.join(AsyncNodeRunner.nodePath, `${type}.js`);
 	}
 // 	private outputs = {};
 // 	private inputs: Record<string, Subscription> = {};

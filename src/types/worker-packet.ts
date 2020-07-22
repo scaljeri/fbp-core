@@ -1,3 +1,5 @@
-export interface WorkerPacket {
-	[key: string]: any;
+
+export interface IFbpInitPacket {
+	type: string;
+	path: string;
 }

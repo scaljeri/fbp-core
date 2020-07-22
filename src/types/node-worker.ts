@@ -4,7 +4,7 @@ import { IFbpConnection, IFbpPacketContext } from './connection';
 import { FbpSocketId } from './socket';
 
 export interface IFbpNodeWorkerStatic {
-	new?(): IFbpNodeWorker;
+	new(): IFbpNodeWorker;
 }
 
 export interface IFbpNodeWorker<T = any> {
@@ -19,4 +19,3 @@ export interface IFbpNodeWorker<T = any> {
 	stop?(): void;
 	resume?(): void;
 }
-
