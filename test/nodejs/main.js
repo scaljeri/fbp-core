@@ -1,6 +1,6 @@
 const { Worker } = require('worker_threads')
 
-const workerData = { x: 10 };
+const workerData = { file: './dist/nodes/random-number-generator.js' };
 
 const worker = new Worker('./worker.js', { workerData })
 worker.on('message', d => {

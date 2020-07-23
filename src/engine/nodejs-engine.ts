@@ -1,6 +1,6 @@
-import { IFbpNodeWorkerStatic } from '../../types';
-import { FbpNodeManager } from '../fbp-node-manager';
-import { AsyncNodeRunner } from './async-node-runner';
+import { IFbpNodeWorkerStatic } from '../types';
+import { FbpNodeManager } from './fbp-node-manager';
+import { AsyncNodeRunner } from './nodejs-async-node-runner';
 import * as path from 'path';
 
 const DEFAULT_WORKER_NAME = '/worker.js';
@@ -22,4 +22,4 @@ export function setNodePaths(paths: Record<string, string>): void {
 	}
 }
 
-export * from '../engine';
+export * from './engine';

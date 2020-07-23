@@ -1,4 +1,4 @@
-import { IFbpNode, IFbpNodeWorker } from '../../types';
+import { IFbpNode, IFbpNodeWorker } from '../types';
 
 export class AsyncNodeRunner implements IFbpNodeWorker {
 	init(state: IFbpNode<any>): void {

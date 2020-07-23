@@ -1,6 +1,6 @@
 import { Worker } from 'worker_threads';
-import { IFbpNode } from '../../types/node';
-import { IFbpNodeWorker } from '../../types/node-worker';
+import { IFbpNode } from '../types/node';
+import { IFbpNodeWorker } from '../types/node-worker';
 import * as path from 'path';
 
 export class AsyncNodeRunner implements IFbpNodeWorker {

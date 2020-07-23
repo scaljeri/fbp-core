@@ -17,6 +17,10 @@ export class NodeWorker implements IFbpNodeWorker<IFbpRandomNumberGeneratorState
 	private countConnections = 0;
 	private outputSocketId!: FbpSocketId;
 
+	constructor() {
+		console.log('RND');
+	}
+
 	stop(): void {
 		clearInterval(this.intervalId);
 		this.intervalId = null;
