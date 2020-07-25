@@ -1,7 +1,7 @@
 export * from './state';
 export * from './node';
 export * from './socket';
-export * from './node-worker';
+export * from './node-runner';
 export * from './packet';
 export * from './connection';
 

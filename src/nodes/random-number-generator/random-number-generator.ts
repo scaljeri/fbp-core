@@ -1,6 +1,5 @@
-import { IFbpNodeWorker } from '../../types/node-worker';
 import { FbpSocketTypes } from '../../constants';
-import { IFbpNode, FbpSocketId } from '../../types';
+import { IFbpNode, FbpSocketId, IFbpNodeRunnerStatic, IFbpNodeRunner } from '../../types';
 import { IFbpWorkerDataOut } from '../../types/worker';
 
 interface IFbpRandomNumberGeneratorState {
@@ -10,7 +9,8 @@ interface IFbpRandomNumberGeneratorState {
 	intergerOnly: boolean;
 }
 
-export class NodeWorker implements IFbpNodeWorker<IFbpRandomNumberGeneratorState> {
+export default class NodeRunner implements IFbpNodeRunner<IFbpRandomNumberGeneratorState> {
+	static type = 'random-number-generator';
 	private intervalId!: any; // NodeJs and the browser have different types
 	private output!: IFbpWorkerDataOut;
 	private state!: IFbpNode;
@@ -83,3 +83,5 @@ export class NodeWorker implements IFbpNodeWorker<IFbpRandomNumberGeneratorState
 		this.outputSocketId = state.sockets![0].id!;
 	}
 }
+
+export { NodeRunner as FbpRandonNumberGenerator };

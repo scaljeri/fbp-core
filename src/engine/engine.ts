@@ -14,6 +14,10 @@ export class FbpEngine {
 	private connections!: Record<string, FbpConnection>;
 	private classRefs: Record<string, any> = {};
 
+	constructor() {
+		console.log('FBP ENGINE is booting up!');
+	}
+
 	get state(): IFbpState {
 		return this._state;
 	}
@@ -89,8 +93,8 @@ export class FbpEngine {
 		this.nodes[connection.toNodeId!].connectToInSocket(instance);
 	}
 
-	register(name: string, classRef: any): FbpEngine {
-		FbpNodeManager.register(name, classRef);
+	register(classRef: any, type?: string): FbpEngine {
+		FbpNodeManager.register(classRef, type);
 		
 		return this;
 	}

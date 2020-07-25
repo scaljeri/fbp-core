@@ -1,6 +1,6 @@
 import { IFbpNode, FbpNodeId } from '../types/node';
 import { FbpSocket } from './fbp-socket';
-import { FbpSocketId, IFbpNodeWorker, IFbpNodeWorkerStatic, IFbpPacketContext } from '../types';
+import { FbpSocketId, IFbpNodeRunner, IFbpNodeWorkerStatic, IFbpPacketContext } from '../types';
 import { FbpConnection } from './fbp-connection';
 import { FbpSocketTypes } from '../constants';
 import { Subscription } from 'rxjs';
@@ -9,15 +9,19 @@ export class FbpNodeManager {
 	static asyncNode: IFbpNodeWorkerStatic;
 
 	public sockets: Record<string, FbpSocket> = {};
-	private node!: IFbpNodeWorker;
+	private node!: IFbpNodeRunner;
 	// private inputs: Record<string, any>;
 	// private outputs: Record<string, any>;
 	private inputs: Record<string, Subscription> = {};
 
 	static NodeClasses: Record<string, any> = {};
 
-	static register(name: string, classRef: any): void {
-		FbpNodeManager.NodeClasses[name] = classRef;
+	static register(classRef: any, type: string = classRef.type): void {
+		if (!type) {
+			throw new Error(`Trying to register a class without a type (${classRef.constructor.name})`);
+		}
+
+		FbpNodeManager.NodeClasses[type] = classRef;
 	}
 
 	constructor(public config: IFbpNode) {

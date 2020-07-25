@@ -1,6 +1,6 @@
-import { IFbpNode, IFbpNodeWorker } from '../../types';
+import { IFbpNode } from '../../types';
 
-// export class DirectWrapper {
+export class DirectWrapper {
 // 	private instance: any;
 
 // 	public static create(name: string, path = FbpWorker.workerPath): IFbpNodeWorker {
@@ -62,4 +62,4 @@ import { IFbpNode, IFbpNodeWorker } from '../../types';
 // 	private postMessage(type: string, payload: any) {
 // 		this.worker.postMessage({ type, payload });
 // 	}
-// }
+}

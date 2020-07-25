@@ -44,6 +44,7 @@
 	"strictNullChecks": true,
 	"strictFunctionTypes": true,
 	"strictPropertyInitialization": true,
+	"declaration": true
   },
   "include": [
 	  "./src/**/*.ts",

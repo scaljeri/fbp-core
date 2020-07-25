@@ -1,8 +1,39 @@
 import { Observable, Subject } from 'rxjs';
 
-import { IFbpNode, IFbpNodeWorker } from '../../types';
+import { IFbpConnection, IFbpNode, IFbpNodeRunner, IFbpPacketContext } from '../../types';
+import { IFbpWorkerDataOut } from '../../types/worker';
 
-// export class FbpWorker implements IFbpNodeWorker {
+export class FbpWorker implements IFbpNodeRunner {
+	init(state: IFbpNode<any>): void {
+		throw new Error('Method not implemented.');
+	}
+	inputStream?(data: any, socketId: string, metadata: any, context: IFbpPacketContext): void {
+		throw new Error('Method not implemented.');
+	}
+	outputStream?(output: IFbpWorkerDataOut): void {
+		throw new Error('Method not implemented.');
+	}
+	connectToInSocket?(connection: IFbpConnection): void {
+		throw new Error('Method not implemented.');
+	}
+	connectToOutSocket?(connection: IFbpConnection): void {
+		throw new Error('Method not implemented.');
+	}
+	disconnectIn?(connection: IFbpConnection): void {
+		throw new Error('Method not implemented.');
+	}
+	disconnectOut?(connection: IFbpConnection): void {
+		throw new Error('Method not implemented.');
+	}
+	start?(): void {
+		throw new Error('Method not implemented.');
+	}
+	stop?(): void {
+		throw new Error('Method not implemented.');
+	}
+	resume?(): void {
+		throw new Error('Method not implemented.');
+	}
 // 	public static workerPath = '/';
 
 // 	public static create(name: string, path = FbpWorker.workerPath): IFbpNodeWorker {
@@ -48,4 +79,4 @@ import { IFbpNode, IFbpNodeWorker } from '../../types';
 // 	private postMessage(type: string, payload: any) {
 // 		this.worker.postMessage({ type, payload });
 // 	}
-// }
+}

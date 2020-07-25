@@ -1,52 +1,41 @@
 import { Worker } from 'worker_threads';
 import { IFbpNode } from '../types/node';
-import { IFbpNodeWorker } from '../types/node-worker';
 import * as path from 'path';
+import { AsyncNodeRunner } from './async-node-runner';
+import { IFbpWorkerToNodePacket } from '../types/packet';
 
-export class AsyncNodeRunner implements IFbpNodeWorker {
+export class NodeJsAsyncNodeRunner extends AsyncNodeRunner {
 	static workerPath: string;
-	static nodePath: string;
-	static nodePaths: Record<string, string>;
+	static nodePaths: Record<string, string> = {};
+
+	nodeState!: IFbpNode;
 
 	private worker!: Worker;
 
 	async init(nodeState: IFbpNode<unknown>): Promise<void> {
+		this.nodeState = nodeState;
+
 		return new Promise((resolve) => {
 			const workerData = {
 				state: nodeState,
-				nodePath: AsyncNodeRunner.getNodePath(nodeState.type!)
+				file: NodeJsAsyncNodeRunner.getNodePath(nodeState.type!)
 			};
-			console.log('load worker: ' + AsyncNodeRunner.workerPath, workerData);
 
-			this.worker = new Worker(AsyncNodeRunner.workerPath, { workerData });
+			this.worker = new Worker(NodeJsAsyncNodeRunner.workerPath, { workerData });
 
-			this.worker.on('message', d => {
-				switch(d.type) {
-					case 'ready':
-						console.log('Worker is ready')
-						resolve();
-						break;
-					case 'data':
-						console.log(d.payload);
-						break;
-					default:
-						throw new Error(`Node of type ${nodeState.type} produced output of unknown type: ${d.type}`);
-				}
-			});
-			this.worker.on('error', (err) => {
-				console.log('Worker error', err)
-				// TODO
-			});
-			this.worker.on('exit', (code) => {
-				// TODO
-				throw new Error(`Worker node of type ${nodeState.type} stopped with exit code ${code}`);
-			});
+			this.worker.on('message', d => this.packet(d));
+			this.worker.on('error', (err) => this.error(err));
+			this.worker.on('exit', (code) => this.exit(code));
 		});
 	}
 
+	send(packet: IFbpWorkerToNodePacket): void {
+		console.log('TODO:#send', packet);
+	}
+
 	private static getNodePath(type: string): string {
-		return AsyncNodeRunner.nodePaths[type!] || 
-			path.join(AsyncNodeRunner.nodePath, `${type}.js`);
+		return NodeJsAsyncNodeRunner.nodePaths[type] || 
+			path.join(NodeJsAsyncNodeRunner.nodePaths._, `${type}.js`);
 	}
 // 	private outputs = {};
 // 	private inputs: Record<string, Subscription> = {};

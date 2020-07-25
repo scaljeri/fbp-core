@@ -1,7 +1,13 @@
 const EsmWebpackPlugin = require('@purtuga/esm-webpack-plugin')
 const path = require('path')
 var glob = require('glob')
-var _ = require('lodash')
+// var _ = require('lodash')
+
+// import * as EsmWebpackPlugin from '@purtuga/esm-webpack-plugin';
+// import * as path from 'path';
+// import * as glob from 'glob';
+// import * as _ from 'lodash';
+
 
 // var nodeExternals = require('webpack-node-externals')
 

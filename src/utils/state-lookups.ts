@@ -2,8 +2,8 @@ import { FbpSocket } from '../engine/fbp-socket';
 import { IFbpNode, FbpSocketId, IFbpNodes, FbpNodeId, IFbpSocket } from '../types';
 
 export function findNodeBySocketId(nodes: IFbpNodes, socketId: FbpSocketId): IFbpNode {
-	return Object.entries(nodes).find(([k, v]) => {
-		return (v.sockets || []).find(s => s.id === socketId);
+	return Object.entries(nodes).find(([k, v]: [string, IFbpNode]) => {
+		return (v.sockets || []).find((s: IFbpSocket) => s.id === socketId);
 	})![1];
 }
 

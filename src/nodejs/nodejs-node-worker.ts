@@ -1,0 +1,44 @@
+import { FbpWorkerToNodePacketsCmds } from '../constants/packets';
+import { IFbpNode } from '../types/node';
+import { IFbpNodeRunner } from '../types/node-runner';
+import { IFbpWorkerToNodePacket } from '../types/packet';
+import { IFbpWorkerDataOutArgs } from '../types/worker';
+
+// worker.js
+const { parentPort, workerData } = require("worker_threads");
+
+require = require('esm')(module);
+
+const { file, state } = workerData as { file: string, state: IFbpNode };
+
+const NodeWorker = require(file).default;
+const node: IFbpNodeRunner = new NodeWorker();
+
+if (node.outputStream) {
+	node.outputStream((...[data, socketId, metaData]: IFbpWorkerDataOutArgs) => {
+		parentPort.postMessage({
+			cmd: 'data', payload: { args: [data, socketId, metaData] }
+		})
+	});
+}
+
+parentPort.postMessage({ cmd: 'ready' });
+
+parentPort.on('message', (packet: IFbpWorkerToNodePacket) => {
+	switch (packet.cmd) {
+		case FbpWorkerToNodePacketsCmds.init:
+			// TODO prep state with getters and setters
+			console.log('NEXT INIT????????');
+			node.init(packet.payload as IFbpNode);
+			break;
+	}
+
+	// if (data.state === 'data') {
+	// parentPort.postMessage({ cmd: 'data', value: data.value * 2 });
+	// }
+});
+
+node.init(state);
+// setTimeout(() => {
+	// parentPort.close();
+// }, 5000);
