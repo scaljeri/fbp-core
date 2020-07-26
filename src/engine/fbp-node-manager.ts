@@ -58,6 +58,7 @@ export class FbpNodeManager {
 						throw new Error(`Node ${this.config.id} emits data to an input socket ${this.config.id}`);
 					}
 
+					console.log('put data into socket', socketId, value);
 					this.sockets[socketId].emit({ value, metadata });
 				});
 			}

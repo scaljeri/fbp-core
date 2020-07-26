@@ -30,7 +30,7 @@ export class NodeJsAsyncNodeRunner extends AsyncNodeRunner {
 	}
 
 	send(packet: IFbpWorkerToNodePacket): void {
-		console.log('TODO:#send', packet);
+		this.worker.postMessage(packet);
 	}
 
 	private static getNodePath(type: string): string {

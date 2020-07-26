@@ -38,6 +38,7 @@ export abstract class AsyncNodeRunner implements IFbpNodeRunner {
 	}
 
 	inputStream(...args: IFbpInputStreamArgs): void {
+		console.log('write data to worker', args);
 		this.send({ 
 			cmd: FbpWorkerToNodePacketsCmds.inputStream,
 			payload: { args }

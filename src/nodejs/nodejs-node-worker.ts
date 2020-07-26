@@ -1,7 +1,7 @@
 import { FbpWorkerToNodePacketsCmds } from '../constants/packets';
 import { IFbpNode } from '../types/node';
-import { IFbpNodeRunner } from '../types/node-runner';
-import { IFbpWorkerToNodePacket } from '../types/packet';
+import { IFbpInputStreamArgs, IFbpNodeRunner } from '../types/node-runner';
+import { FbpFnCallPacket, IFbpWorkerToNodePacket } from '../types/packet';
 import { IFbpWorkerDataOutArgs } from '../types/worker';
 
 // worker.js
@@ -25,11 +25,17 @@ if (node.outputStream) {
 parentPort.postMessage({ cmd: 'ready' });
 
 parentPort.on('message', (packet: IFbpWorkerToNodePacket) => {
+	console.log('|||||||', packet);
 	switch (packet.cmd) {
 		case FbpWorkerToNodePacketsCmds.init:
 			// TODO prep state with getters and setters
-			console.log('NEXT INIT????????');
 			node.init(packet.payload as IFbpNode);
+			break;
+		case FbpWorkerToNodePacketsCmds.inputStream:
+			if (node.inputStream) {
+				const args = (packet.payload as FbpFnCallPacket).args as IFbpInputStreamArgs;
+				node.inputStream(...args);
+			}
 			break;
 	}
 
