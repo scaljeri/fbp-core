@@ -14,9 +14,9 @@ var glob = require('glob')
 module.exports = {
 	mode: 'production',
 	entry: glob.sync('./src/**/*.ts').reduce((acc, path) => {
-		if (path.match(/^\.\/src\/(nodes|workers\/web)\//)) {
+		if (path.match(/^\.\/src\/(nodes|web)\//) && !path.match(/abstract-node\.ts/)) {
 		const entry = path.replace(/\/([^\/]+).ts$/, '')
-		acc[`nodes/${RegExp.$1}`] = path //[path] = path
+		acc[`bundled/${RegExp.$1}`] = path //[path] = path
 		}
 		return acc
 	}, {}),

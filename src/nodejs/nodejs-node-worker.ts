@@ -25,7 +25,6 @@ if (node.outputStream) {
 parentPort.postMessage({ cmd: 'ready' });
 
 parentPort.on('message', (packet: IFbpWorkerToNodePacket) => {
-	console.log('|||||||', packet);
 	switch (packet.cmd) {
 		case FbpWorkerToNodePacketsCmds.init:
 			// TODO prep state with getters and setters

@@ -84,4 +84,4 @@ export default class NodeRunner implements IFbpNodeRunner<IFbpRandomNumberGenera
 	}
 }
 
-export { NodeRunner as FbpRandonNumberGenerator };
+export { NodeRunner, NodeRunner as FbpRandonNumberGenerator };

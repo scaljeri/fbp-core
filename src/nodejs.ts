@@ -27,6 +27,7 @@ export * from './nodejs';
 export * from './nodes';
 export * from './constants';
 export * from './engine';
+export * from './engine/nodejs-async-node-runner';
 export * from './fixures';
 export * from './types';
 export * from './utils';

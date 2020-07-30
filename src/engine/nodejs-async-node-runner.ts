@@ -35,7 +35,7 @@ export class NodeJsAsyncNodeRunner extends AsyncNodeRunner {
 
 	private static getNodePath(type: string): string {
 		return NodeJsAsyncNodeRunner.nodePaths[type] || 
-			path.join(NodeJsAsyncNodeRunner.nodePaths._, `${type}.js`);
+			path.join(NodeJsAsyncNodeRunner.nodePaths._, `${type}/${type}.js`);
 	}
 // 	private outputs = {};
 // 	private inputs: Record<string, Subscription> = {};

@@ -79,4 +79,4 @@ export default class NodeRunner implements IFbpNodeRunner<ILoggerState> {
 	}
 }
 
-export { NodeRunner as FbpLogger };
+export { NodeRunner,  NodeRunner as FbpLogger };

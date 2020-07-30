@@ -1,5 +1,5 @@
 
 export interface IFbpInitPacket {
-	type: string;
-	path: string;
+	cmd: string; // TODO: specific specific commands
+	payload: { path: string, cls?: string }; // Specify interface for this
 }
