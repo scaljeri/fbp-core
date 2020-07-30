@@ -1,13 +1,14 @@
 import { FbpWorkerToNodePacketsCmds } from '../constants/packets';
 import { IFbpNode } from '../types/node';
-import { IFbpWorkerToNodePacket } from '../types/packet';
+import { IFbpInputStreamArgs, IFbpNodeRunner } from '../types/node-runner';
+import { FbpFnCallPacket, IFbpWorkerToNodePacket } from '../types/packet';
+import { IFbpWorkerDataOutArgs } from '../types/worker';
 import { IFbpInitPacket } from '../types/worker-packet';
 
-declare var importScripts: any;
-declare var DoMagic: any;
-
 const ctx: Worker = self as any;
-console.log('Hello from Worker');
+let node: IFbpNodeRunner;
+
+
 ctx.addEventListener('message', async (e) => {
 	const packet = e.data as IFbpWorkerToNodePacket;
 
@@ -15,29 +16,24 @@ ctx.addEventListener('message', async (e) => {
 		case FbpWorkerToNodePacketsCmds.init:
 			// TODO prep state with getters and setters
 			const payload = (packet as IFbpInitPacket).payload;
-			console.log('load file ', payload.path);
-			console.log('cls: ', payload )
 			const fileContent = await import(/* webpackIgnore: true */ payload.path);
-			console.log('xyz');
-			console.log(new fileContent.NodeRunner);
-			console.log('xyz');
-			// importScripts(filename)
-			// console.log(DoMagic);
-			//  .then((m) => {
-			// 	 console.log(m.name)
-			//  })
-			// 	.catch(err => {
-			// 		console.log('hmmmm');
-			// 		console.error('Error during loading module: ' + err)
-			// 	})
-			// console.log(fileContent);
-			// node.init(packet.payload as IFbpNode);
+
+			node = new fileContent.NodeRunner;
+			node.init(payload.state);
+
+			if (node.outputStream) {
+				node.outputStream((...[data, socketId, metaData]: IFbpWorkerDataOutArgs) => {
+					ctx.postMessage({
+						cmd: 'data', payload: { args: [data, socketId, metaData] }
+					})
+				});
+			}
 			break;
 		case FbpWorkerToNodePacketsCmds.inputStream:
-			// if (node.inputStream) {
-				// const args = (packet.payload as FbpFnCallPacket).args as IFbpInputStreamArgs;
-				// node.inputStream(...args);
-			// }
+			if (node && node.inputStream) {
+				const args = (packet.payload as FbpFnCallPacket).args as IFbpInputStreamArgs;
+				node!.inputStream(...args);
+			}
 			break;
 	}
 

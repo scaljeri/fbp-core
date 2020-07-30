@@ -36,6 +36,7 @@ export default class NodeRunner implements IFbpNodeRunner<IFbpRandomNumberGenera
 		this.intervalId = setInterval(() => {
 			if (this.output) {
 				const value = Math.random() * (this.state.config.max - this.state.config.min) + this.state.config.min;
+				console.log('RND: ' + value);
 				this.output(value, this.outputSocketId);
 			}
 		}, this.state.config.interval);

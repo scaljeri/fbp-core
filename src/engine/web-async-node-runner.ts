@@ -13,28 +13,23 @@ export class WebAsyncNodeRunner extends AsyncNodeRunner {
 
 	async init(nodeState: IFbpNode<unknown>): Promise<void> {
 		this.nodeState = nodeState;
-		console.log('INTI INIT!!!')
 
 		return new Promise(async (resolve) => {
 			console.log('WORKER:' + WebAsyncNodeRunner.workerPath);
 			// https://web.dev/module-workers/
 			this.worker = new Worker(WebAsyncNodeRunner.workerPath, { type: "module" });
 
-			console.log('1XXXXX872:' + WebAsyncNodeRunner.getNodePath(nodeState.type!));
-			// const { NodeRunner } = await import( /* webpackIgnore: true */ WebAsyncNodeRunner.getNodePath(nodeState.type!));
-			// const clsStr = JSON.stringify(new NodeRunner);
-			// console.log('CLS as str: ' + clsStr);
-			// console.log('-------------------');
 			this.worker.postMessage({ 
 				cmd: 'init', 
 				payload: { 
-					path: WebAsyncNodeRunner.getNodePath(nodeState.type!)
+					path: WebAsyncNodeRunner.getNodePath(nodeState.type!),
+					state: nodeState
 				}
 			});
 
-			// this.worker.on('message', d => this.packet(d));
-			// this.worker.on('error', (err) => this.error(err));
-			// this.worker.on('exit', (code) => this.exit(code));
+			this.worker.addEventListener('message', (d: MessageEvent) => this.packet(d.data));
+			this.worker.addEventListener('error', (err) => this.error(err));
+			this.worker.addEventListener('exit', (code) => this.exit(code));
 		});
 	}
 
