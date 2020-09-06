@@ -17,6 +17,7 @@ export interface IFbpNodeUI {
 
 export interface IFbpNode<T = any> {
 	id?: FbpNodeId;
+	title?: string;
 	parentId?: FbpNodeId;
 	type?: string;
 	config?: T;

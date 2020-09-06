@@ -2,7 +2,7 @@ import 'mocha';
 import * as chai from 'chai';
 import * as sinonChai from 'sinon-chai';
 
-import { stateBasic } from '../fixures/basic-number-logging';
+import { stateBasic } from '../fixtures/basic-number-logging';
 import { findNodeBySocketId } from './state-lookups';
 
 const should = chai.should();

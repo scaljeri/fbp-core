@@ -7,7 +7,7 @@ import { createUID } from '../utils/unique-id';
 import { FbpSocketTypes, FbpSocketPositions } from '../constants/socket.enum';
 import { FbpSocketId } from '../types/socket';
 import { IFbpNode } from '../types/node';
-import { stateBasic } from '../fixures/basic-number-logging';
+import { stateBasic } from '../fixtures/basic-number-logging';
 
 const should = chai.should();
 chai.use(sinonChai);
