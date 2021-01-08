@@ -10,6 +10,7 @@ export interface IFbpPosition {
 export type FbpUIMode = 'fullscreen' | 'active' | 'normal';
 
 export interface IFbpNodeUI {
+	tagName?: string,
 	position?: IFbpPosition;
 	mode?: FbpUIMode;
 	index?: number;

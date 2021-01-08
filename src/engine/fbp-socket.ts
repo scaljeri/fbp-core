@@ -35,7 +35,7 @@ export class FbpSocket {
 		return this.config.type;
 	}
 
-	get dataType(): string {
+	get dataType(): string | undefined {
 		return this.config.dataType;
 	}
 }

@@ -31,37 +31,38 @@ describe('Utils: fix-state', () => {
 
 			it('should fix the empty state', () => {
 				state.should.eqls({
-					nodes: {}, connections: {}
+					nodes: [], connections: []
 				});
 			});
 		});
 
 		describe('with nodes', () => {
 			beforeEach(() => {
-				state = cloneAndFixState({ nodes: { x: { id: 'x' } } });
+				state = cloneAndFixState({ nodes: [{ id: 'x' }] });
 			});
 
 			it('should fix an emtpy node', () => {
 				state.should.eqls({
-					nodes: {
-						x: {
+					nodes: [
+						{
 							id: 'x', sockets: [],
 							ui: { position: { left: 0, top: 0 } }
 						}
-					}, connections: {}
+					], connections: []
 				});
 			});
 		});
 
 		describe('with empty connections', () => {
 			beforeEach(() => {
-				state = cloneAndFixState({ connections: {x: []} });
+				state = cloneAndFixState({ connections: [{
+					id: 'x', from: 'a', to: 'b'}] as any });
 			});
 
 			it('should fix an emtpy connection array', () => {
 				state.should.eqls({
-					nodes: {},
-					connections: { x: []}
+					nodes: [],
+					connections: [] as any
 				});
 			});
 		});

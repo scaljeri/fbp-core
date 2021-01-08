@@ -1,0 +1,29 @@
+{
+  "name": "fbp-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf dist && yarn build:node && yarn build:web",
+    "build:web": "webpack --config ./webpack.config-web.js",
+    "build:node": "tsc -p ./tsconfig-nodejs.json",
+    "node:sync": "node ./runner-node-sync.js",
+    "node:async": "node ./runner-node-async.js"
+  },
+  "devDependencies": {
+    "@purtuga/esm-webpack-plugin": "^1.2.1",
+    "@types/node": "^14.0.24",
+    "esm": "^3.2.25",
+    "node-loader": "^1.0.0",
+    "rollup": "^2.23.0",
+    "ts-loader": "^8.0.1",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.0"
+  },
+  "dependencies": {
+    "@scaljeri/fbp-core-nodejs": "^1.0.0"
+  }
+}

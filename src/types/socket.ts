@@ -14,7 +14,7 @@ export interface IFbpSocket {
 	type: FbpSocketTypes;
 	color?: string;
 	label?: string;
-	dataType?: any;
+	dataType?: string;
 	side?: FbpSocketPositions;
 }
 

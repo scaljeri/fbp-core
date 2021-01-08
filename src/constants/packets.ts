@@ -1,5 +1,5 @@
 export enum FbpWorkerToNodePacketsCmds {
-	init = 'init',
+	init = 'init',								// Initialize with config from state
 	inputStream = 'inputStream',
 	outputStream = 'outputStream',
 	connectToInSocket = 'connectToInSocket',

@@ -4,8 +4,8 @@ import { IFbpConnection } from '../types/connection'
 
 const stateBasic: IFbpState = {
 	name: 'Random number logging',
-	nodes: {
-		rnd: {
+	nodes: [
+		{
 			id: 'rnd',
 			type: 'random-number-generator',
 			sockets: [
@@ -22,7 +22,7 @@ const stateBasic: IFbpState = {
 				}
 			}
 		},
-		log: {
+		{
 			id: 'log',
 			ui: {
 				position: {
@@ -47,19 +47,17 @@ const stateBasic: IFbpState = {
 				}
 			]
 		},
-	},
-	connections: {
-		main: [
-			{ 
-				id: 'conn-a', 
-				from: 'sock-1',
-				fromNodeId: 'rnd',
-				to: 'sock-2',
-				toNodeId: 'log',
-				dataType: 'number'
-			} as IFbpConnection
-		]
-	}
-}
+	],
+	connections: [
+		{
+			id: 'conn-a',
+			from: 'sock-1',
+			fromNodeId: 'rnd',
+			to: 'sock-2',
+			toNodeId: 'log',
+			dataType: 'number'
+		} as IFbpConnection
+	]
+};
 
 export { stateBasic }

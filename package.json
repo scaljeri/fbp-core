@@ -6,11 +6,12 @@
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": "dist/index.js",
-		"./nodejs": "dist/nodejs.js",
-		"./web": "dist/web.js"
+		"./nodejs": "dist/nodejs/index.js",
+		"./web": "dist/browser/index.js"
 	},
 	"scripts": {
-		"build": "rm -rf ./dist && tsc -p ./tsconfig.json && yarn build:nodes",
+		"build": "rm -rf ./dist && tsc -p ./tsconfig.json && yarn build:nodes && yarn generate:pkgs",
+		"generate:pkgs": "tsc --resolveJsonModule ./scripts/generate-package.json.ts && node ./scripts/generate-package.json.js",
 		"build:everything": "rm -rf ./dist && yarn build:workers && yarn build:nodes",
 		"build:nodes": "webpack",
 		"build:workers": "tsc -p tsconfig-workers.json",
@@ -20,8 +21,10 @@
 		"serve": "npx live-server .",
 		"babel": "./node_modules/.bin/babel ./dist --out-dir lib",
 		"browser": "browserify -t babelify ./dist/engine/engine.js  > ./dist/bundle.js",
-		"publish": "npm publish --access public",
-		"test:backend": "tsc -p ./tsconfig-backend.json && node ./dist/test/backend.js"
+		"publish": "npm publish ./dist --access public",
+		"test:backend": "tsc -p ./tsconfig-backend.json && node ./dist/test/backend.js",
+		"e2e:nodejs:async": "node ./test-e2e/nodejs-runner-async.js",
+		"e2e:nodejs:sync": "node ./test-e2e/nodejs-runner-sync.js"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.8.4",

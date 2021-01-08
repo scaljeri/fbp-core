@@ -4,9 +4,7 @@ import { createUID } from './unique-id';
 import { IFbpSocket } from '../types/socket';
 import { FbpSocketPositions, FbpSocketTypes } from '../constants/socket.enum';
 import { IFbpConnection } from '../types/connection';
-import { findNodeBySocketId, findSocket } from './state-lookups';
-
-type INodes = Record<string, IFbpNode>;
+import { findNodeById, findNodeBySocketId, findSocket } from './state-lookups';
 
 export function cloneAndFixState(input: IFbpState = {}): IFbpState {
 	return {
@@ -16,14 +14,14 @@ export function cloneAndFixState(input: IFbpState = {}): IFbpState {
 	}
 }
 
-export function cloneAndFixNodes(input: INodes = {}): INodes {
-	return Object.entries(input).reduce((nodes, [k, v]) => (nodes[k] = cloneAndFixNode(v), nodes), {} as INodes)
+export function cloneAndFixNodes(input: IFbpNode[] = []): IFbpNode[] {
+	return input.map(cloneAndFixNode);
 }
 
-export function cloneAndFixNode(input: IFbpNode = {}): INodes {
+export function cloneAndFixNode(input: IFbpNode = {}): IFbpNode {
 	return {
 		...input,
-		...(input.config && JSON.parse(JSON.stringify(input.config))),
+		...(input.config && { config: JSON.parse(JSON.stringify(input.config)) }),
 		id: input.id || createUID(),
 		sockets: cloneAndFixSockets(input.sockets),
 		ui: cloneAndFixUi(input.ui)
@@ -58,44 +56,60 @@ export function cloneAndFixSocket(input: IFbpSocket): IFbpSocket {
 	return socket;
 }
 
-export function cloneAndFixConnections(input: IFbpConnections = {}, nodes: IFbpNodes = {}): IFbpConnections {
-	return Object.entries(input).reduce((out, [k, v]) => {
-		out[k] = v.map(c => cloneAndFixConnection(c, nodes));
-
-		return out;
-	}, {} as IFbpConnections);
+export function cloneAndFixConnections(input: IFbpConnection[] = [], nodes: IFbpNode[] = []): IFbpConnection[] {
+	return (input
+		.map(conn => cloneAndFixConnection(conn, nodes))
+		.filter(Boolean)) as IFbpConnection[];
 }
 
-export function cloneAndFixConnection(input: IFbpConnection, nodes?: IFbpNodes): IFbpConnection {
+// 1) Clone a connection
+// 2) Verify dataType based on the socketIn type
+// 3) Add missing from/to and fromNodeId/toNodeId if possible
+// 4) If it cannot be fixed, it returns `null`
+export function cloneAndFixConnection(input: IFbpConnection, nodes?: IFbpNode[]): IFbpConnection | null {
 	const conn = {
 		...input,
 		id: input.id || createUID(),
 	};
 
-	if (!conn.from || !conn.to){
-		throw new Error(`'from' and 'to' are required for a Connection`);
+	if (nodes === undefined) {
+		return conn;
 	}
 
-	if (nodes) {
+	if (!conn.from || !conn.to){
+		throw new Error(`'from' and 'to' are required for a Connection (id=${conn.id})`);
+	}
+	if (nodes.length > 0) {
 		let toDataType: string;
 
 		if (!conn.fromNodeId) {
-			conn.fromNodeId = findNodeBySocketId(nodes, conn.from).id;
+			conn.fromNodeId = findNodeBySocketId(nodes, conn.from)!.id;
 		}
-		conn.dataType = findSocket(nodes, conn.from, conn.fromNodeId).dataType;
 
-		if (!conn.toNodeId) {
-			conn.toNodeId = findNodeBySocketId(nodes, conn.to).id;
+		// Always determine dataType, just to make sure
+		const fromSocket = findSocket(nodes, conn.from, conn.fromNodeId);
+		if (!fromSocket) {
+			// TODO: Hmmm no from socket found, maybe we should not keep this connection
+			return null;
 		}
-		toDataType = findSocket(nodes, conn.to, conn.toNodeId).dataType;
+		conn.dataType = fromSocket!.dataType;
 
+		const toNode = conn.toNodeId ? findNodeById(nodes, conn.toNodeId) : findNodeBySocketId(nodes, conn.to);
+		if (!toNode) {
+			// TODO: Hmmm no to-node found, maybe we should not keep this connection
+			return null;
+		}
+		conn.toNodeId = toNode!.id;
+
+		// Final check
+		toDataType = findSocket(nodes, conn.to, conn.toNodeId)!.dataType!;
 		if (conn.dataType !== toDataType) {
+			// TODO: No idea what to do with this
 			throw new Error(`Cannot connect two sockets of diffenrent data types ${conn.dataType} != ${toDataType} (id: ${conn.id})`);
 		}
-	}
-
-	if (!conn.dataType) {
-		throw new Error(`Connection ${conn.id} does not have a dataType`);
+	} else {
+		// TODO: remove connection????
+		return null;
 	}
 
 	return conn as IFbpConnection;

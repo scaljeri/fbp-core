@@ -9,6 +9,7 @@ export abstract class AsyncNodeRunner implements IFbpNodeRunner {
 	abstract nodeState: IFbpNode;
 	output!: IFbpWorkerDataOut;
 
+	// Received data from worker
 	packet(packet: IFbpWorkerFromNodePacket): void {
 		switch (packet.cmd) {
 			case FbpWorkerFromNodePacketsCmds.ready:
@@ -61,6 +62,7 @@ export abstract class AsyncNodeRunner implements IFbpNodeRunner {
 	disconnectOut?(connection: IFbpConnection): void {
 
 	}
+
 	start?(): void {
 
 	}

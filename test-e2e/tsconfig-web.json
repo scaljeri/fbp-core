@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "esnext",                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
-    "module": "esnext",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
-    "lib": ["es2015", "dom" ],                             /* Specify library files to be included in the compilation. */
+    "module": "ESNext",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
+    "lib": ["es2017", "dom" ],                             /* Specify library files to be included in the compilation. */
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
@@ -30,7 +30,8 @@
     // "sourceRoot": "",                      /* Specify the location where debugger should locate TypeScript files instead of source locations. */
     // "mapRoot": "",                         /* Specify the location where debugger should locate map files instead of generated locations. */
     // "inlineSourceMap": true,               /* Emit a single file with source maps instead of having a separate file. */
-    // "inlineSources": true,                 /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
+	// "inlineSources": true,                 /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
+	"sourceMap": true,
 
     /* Experimental Options */
     // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
@@ -44,15 +45,17 @@
 	"strictNullChecks": true,
 	"strictFunctionTypes": true,
 	"strictPropertyInitialization": true,
-	"declaration": true
+	"declaration": true,
+	"baseUrl": ".",
+	"paths": {
+		"@scaljeri/fbp-core": ["./node_modules/@scaljeri/fbp-core/src/web"]
+	}
   },
   "include": [
 	  "./src/**/*.ts",
   ],
   "exclude":  [
-	  "src/_workers",
-	  "src/**/*.test.ts",
-	  "**/*.d.ts",
-	  "node_modules"
+	  "src/nodejs",
+	  "./node_modules"
   ]
 }

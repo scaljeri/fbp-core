@@ -38,10 +38,11 @@ export class FbpEngine {
 
 	getNode(nodeId: FbpNodeId): IFbpNode | null {
 		if (this.state) {
-			return this.state.nodes![nodeId];
+			return this.state.nodes!.find(node => node.id === nodeId) || null;
 		}
 
 		console.warn(`Trying to retrieve node ${nodeId} without a state`);
+
 		return null;
 
 	}
@@ -66,7 +67,11 @@ export class FbpEngine {
 			throw new Error(`Found multiple nodes with id ${node.id}`);
 		}
 
-		this._state.nodes![node.id!] = node;
+		if (!this._state!.nodes!.find(n => n.id === node.id)) {
+			this._state!.nodes!.push(node);
+		}
+
+		// This is where the magics begins
 		this.nodes[node.id!] = new FbpNodeManager(node);
 
 		node.sockets!.forEach(socket => {
@@ -85,7 +90,7 @@ export class FbpEngine {
 		const from = this.sockets[connection.from];
 		const to = this.sockets[connection.to];
 
-		connection = cloneAndFixConnection(connection, this.state.nodes);
+		connection = cloneAndFixConnection(connection, this.state.nodes)!;
 		const instance = new FbpConnection(from, to, connection);
 
 		this.connections[connection.id!] = instance;
@@ -100,19 +105,13 @@ export class FbpEngine {
 	}
 
 	private init(): void {
-		Object.entries(this.state.nodes!).forEach(([key, node]) => {
-			if (node.id !== key) {
-				throw new Error(`Node ${node.id} has incorrect key in 'nodes' object`);
-			}
-
+		this.state.nodes!.forEach(node => {
 			this.addNode(node);
 		});
 
-		Object.values(this.state.connections!).forEach((connections: IFbpConnection[]) => {
+		this.state.connections!.forEach(connection => {
 			// Those connection all belong to the same parent node
-			connections.forEach(connection => {
-				this.addConnection(connection);
-			});
+			this.addConnection(connection);
 		});
 	}
 }

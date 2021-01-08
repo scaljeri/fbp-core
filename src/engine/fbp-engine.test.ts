@@ -8,6 +8,7 @@ import { FbpSocketTypes, FbpSocketPositions } from '../constants/socket.enum';
 import { FbpSocketId } from '../types/socket';
 import { IFbpNode } from '../types/node';
 import { stateBasic } from '../fixtures/basic-number-logging';
+import { FbpNodeManager } from './fbp-node-manager';
 
 const should = chai.should();
 chai.use(sinonChai);
@@ -29,6 +30,10 @@ describe('FbpEngine', () => {
 
 	beforeEach(() => {
 		engine = new FbpEngine();
+		FbpNodeManager.NodeClasses['random-number-generator'] = function() { 
+			this.init = () => {}, this.addSockets = () => {}}
+		FbpNodeManager.NodeClasses['logger'] = function() { 
+			this.init = () => {}, this.addSockets = () => {}}
 	});
 
 	describe('#set/get state', () => {

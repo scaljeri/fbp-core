@@ -1,0 +1,7 @@
+{
+	"name": "@scaljeri/fbp/nodejs",
+	"version": "1.0.4",
+	"license": "MIT",
+	"main": "./index.js",
+	"types": "./index.d.ts"
+}
