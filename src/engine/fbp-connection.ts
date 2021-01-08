@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { FbpSocket } from './fbp-socket';
-import { IFbpConnection, IFbpConnectionId } from '../types/connection';
+import { IFbpConnection, FbpConnectionId } from '../types/connection';
 import { FbpNodeId } from '../types';
 
 export class FbpConnection {
@@ -25,7 +25,7 @@ export class FbpConnection {
 		}
 	}
 
-	get id(): IFbpConnectionId {
+	get id(): FbpConnectionId {
 		return this.config.id!;
 	}
 

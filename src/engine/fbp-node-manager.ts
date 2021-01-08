@@ -83,8 +83,9 @@ export class FbpNodeManager {
 		// this.sockets
 	}
 
-	destroy(): void {
+	destroy({ code }: any): void {
 		// TODO
+		// new state: code === 1
 	}
 
 	get id(): FbpNodeId {

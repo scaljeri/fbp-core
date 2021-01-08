@@ -26,7 +26,7 @@ export class FbpEngine {
 		this._state = cloneAndFixState(state);
 
 		if (this.nodes) {
-			Object.values(this.nodes).forEach(node => node.destroy());
+			Object.values(this.nodes).forEach(node => node.destroy({ code: 1 }));
 		}
 
 		this.nodes = {};
