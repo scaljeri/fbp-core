@@ -7,13 +7,12 @@ export interface IFbpPosition {
 	left: number;
 }
 
-export type FbpUIMode = 'fullscreen' | 'active' | 'normal';
+export type FbpUIMode = 'cover' | 'normal';
 
 export interface IFbpNodeUI {
 	tagName?: string,
 	position?: IFbpPosition;
 	mode?: FbpUIMode;
-	index?: number;
 }
 
 export interface IFbpNode<T = any> {
